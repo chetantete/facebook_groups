@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Facebook Groups</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body>  
+  <% unless current_user %> 
+    <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path , class: "btn btn-block btn-social  btn-facebook"%>
+  <% else %>
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="/">Home </a>
+      <a class="navbar-brand" href="/groups">Groups</a>
+      <a class="navbar-brand" href="/posts">Posts</a>
+      <a class="navbar-brand" href="/keywords">Keywords</a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+
+          <li class="nav-item">  <img src="<%= current_user[:image] %>"><%= current_user[:name] %> | 
+            <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+          </li>
+
+        </ul>
+      </div>
+  </nav>
+  <% end %>
+<!-- 
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+ -->
+  <script type="text/javascript">
+    <%  if notice.present?%>
+    var message = "<%= notice %>";
+    // sweetAlert(message);
+    toastr.success(message);
+    <% end %>
+    <%  if alert.present?%>
+    var message = "<%= alert %>";
+    // sweetAlert(message);
+    toastr.warning(message);
+    <% end %>
+  </script>
+  
+  <%= yield %>
+</body>
+</html>
